@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { navData } from "../../data/navData";
 
 export default function Navigation() {
+  const path = window.location.pathname;
+
   const [showMenu, setShowMenu] = useState(false);
 
   const slide = useTransition(showMenu, {
@@ -47,19 +49,27 @@ export default function Navigation() {
               style={style}
               className="fixed bg-white top-0 left-0 w-4/5 h-full z-50 shadow p-3"
             >
-              <div className="font-bold border-b py-3">Menu</div>
+              <div className="font-bold border-b py-3 px-2">Menu</div>
               <ul>
-                {navData.map((menu, idx) => (
-                  <li key={idx}>
-                    <Link
-                      className="text-blue-500 block py-2 border-b"
-                      to={menu?.path}
-                      onClick={() => setShowMenu(!showMenu)}
-                    >
-                      {menu?.title}
-                    </Link>
-                  </li>
-                ))}
+                {navData.map((menu, idx) => {
+                  const selected = menu?.path === path;
+
+                  return (
+                    <li key={idx}>
+                      <Link
+                        className={`${
+                          selected
+                            ? "text-white bg-blue-500 rounded"
+                            : "text-blue-500"
+                        } block p-2 border-b`}
+                        to={menu?.path}
+                        onClick={() => setShowMenu(!showMenu)}
+                      >
+                        {menu?.title}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </animated.div>
           )
