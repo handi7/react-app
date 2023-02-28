@@ -2,6 +2,8 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTransition, animated } from "@react-spring/web";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { navData } from "../../data/navData";
 
 export default function Navigation() {
   const [showMenu, setShowMenu] = useState(false);
@@ -47,7 +49,17 @@ export default function Navigation() {
             >
               <div className="font-bold border-b py-3">Menu</div>
               <ul>
-                <li>Home</li>
+                {navData.map((menu, idx) => (
+                  <li key={idx}>
+                    <Link
+                      className="text-blue-500 block py-2 border-b"
+                      to={menu?.path}
+                      onClick={() => setShowMenu(!showMenu)}
+                    >
+                      {menu?.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </animated.div>
           )
